@@ -1,14 +1,12 @@
 # PuzzleTensor
 This repository is the official implementation of Fast Multidimensional Partial Fourier Transform with Automatic Hyperparameter Selection (KDD 2025).
-
 <p align="center">
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-0.gif" width="400"/>
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-1.gif" width="400"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-0.gif" width="360"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-1.gif" width="360"/>
   <br>
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-0.gif" width="400"/>
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-1.gif" width="400"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-0.gif" width="360"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-1.gif" width="360"/>
 </p>
-
 
 ## Abstract
 How can we achieve compact tensor representations without sacrificing reconstruction accuracy? Tensor decomposition is a cornerstone of modern data mining and machine learning, enabling efficient representations of multi-dimensional data through fundamental algorithms such as CP, Tucker, and Tensor-Train decompositions. However, directly applying these methods to raw data often results in high target ranks, poor reconstruction accuracy, and computational inefficiencies, as the data may not naturally conform to the low-rank structures these methods assume.
