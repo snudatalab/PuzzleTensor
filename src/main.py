@@ -1,4 +1,3 @@
-# main.py
 """
 PuzzleTensor: A Method-Agnostic Data Transformation for Compact Tensor Factorization
 """
