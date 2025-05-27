@@ -1,11 +1,11 @@
 # PuzzleTensor
 This repository is the official implementation of Fast Multidimensional Partial Fourier Transform with Automatic Hyperparameter Selection (KDD 2025).
 <p align="center">
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-0.gif" width="360"/>
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-1.gif" width="360"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-0.gif" width="320"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/ex-1.gif" width="320"/>
   <br>
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-0.gif" width="360"/>
-  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-1.gif" width="360"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-0.gif" width="320"/>
+  <img src="https://raw.githubusercontent.com/snudatalab/PuzzleTensor/main/docs/mnist-1.gif" width="320"/>
 </p>
 
 ## Abstract
