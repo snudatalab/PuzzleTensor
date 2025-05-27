@@ -39,7 +39,7 @@ The real-world datasets are available at [Uber](http://frostt.io/), [Action](htt
 
 ## Reference
 
-If you use this code, please cite the following papers.
+If you use this code, please cite the following paper.
 ~~~
 @inproceedings{ParkKK25,
   author    = {Yong-chan Park and
