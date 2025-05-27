@@ -38,4 +38,15 @@ The real-world datasets are available at [Uber](http://frostt.io/), [Action](htt
 
 
 ## Reference
-TBD
+
+If you use this code, please cite the following papers.
+~~~
+@inproceedings{ParkKK25,
+  author    = {Yong-chan Park and
+               Kisoo Kim and
+               U Kang},
+  title     = {PuzzleTensor: A Method-Agnostic Data Transformation for Compact Tensor Factorization},
+  booktitle = {ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD)},
+  year      = {2025}
+}
+~~~
