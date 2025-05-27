@@ -21,19 +21,18 @@ In this paper, we propose **PuzzleTensor**, a method-agnostic data transformatio
 
 
 ## Datasets
-We provide the synthetic datasets used in our experiments at [here](https://drive.google.com/open?id=1fkwuug02bgqnRTVNWvSI3bk9Ks1i0DQF&usp=drive_copy). 
-The real-world datasets are available at [Uber](http://frostt.io/), [Action](https://github.com/titu1994/MLSTM-FCN), [PEMS-SF](https://www.timeseriesclassification.com/), [Activity](https://github.com/titu1994/MLSTM-FCN), [Stock](https://github.com/jungijang/KoreaStockData), and [NYC](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page).
+We provide the synthetic and real-world datasets used in our experiments below.
 
-| Dataset | Type | Size | Density |
-|---------|------|------|---------|
-| $D_{n=4,\cdots,8}$ | Synthetic | $2^n \times 2^n \times 2^n$ | $1.000$ |
-| $S_{n=4,\cdots,8}$ | Synthetic | $2^n \times 2^n \times 2^n$ | $0.010$ |
-| Uber | Real-world | $183 \times 24 \times 1140$ | $0.138$ |
-| Action | Real-world | $100 \times 570 \times 567$ | $0.393$ |
-| PEMS-SF | Real-world | $963 \times 144 \times 440$ | $0.999$ |
-| Activity | Real-world | $337 \times 570 \times 320$ | $0.569$ |
-| Stock | Real-world | $1317 \times 88 \times 916$ | $0.816$ |
-| NYC | Real-world | $265 \times 265 \times 28 \times 35$ | $0.118$ |
+| Dataset | Type | Size | Density | Source |
+|---------|------|------|---------|--------|
+| $D_{n=4,\cdots,8}$ | Synthetic | $2^n \times 2^n \times 2^n$ | $1.000$ | [LINK](https://drive.google.com/open?id=1fkwuug02bgqnRTVNWvSI3bk9Ks1i0DQF&usp=drive_copy) | 
+| $S_{n=4,\cdots,8}$ | Synthetic | $2^n \times 2^n \times 2^n$ | $0.010$ | [LINK](https://drive.google.com/open?id=1fkwuug02bgqnRTVNWvSI3bk9Ks1i0DQF&usp=drive_copy) | 
+| Uber | Real-world | $183 \times 24 \times 1140$ | $0.138$ | [LINK](http://frostt.io/) | 
+| Action | Real-world | $100 \times 570 \times 567$ | $0.393$ | [LINK](https://github.com/titu1994/MLSTM-FCN) | 
+| PEMS-SF | Real-world | $963 \times 144 \times 440$ | $0.999$ | [LINK](https://www.timeseriesclassification.com/) | 
+| Activity | Real-world | $337 \times 570 \times 320$ | $0.569$ | [LINK](https://github.com/titu1994/MLSTM-FCN) | 
+| Stock | Real-world | $1317 \times 88 \times 916$ | $0.816$ | [LINK](https://github.com/jungijang/KoreaStockData) | 
+| NYC | Real-world | $265 \times 265 \times 28 \times 35$ | $0.118$ | [LINK](https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page) | 
 
 
 ## Reference
