@@ -4,13 +4,12 @@ PuzzleTensor: A Method-Agnostic Data Transformation for Compact Tensor Factoriza
 
 import math
 import time
-import random
+import torch
 import numpy as np
 import tensorly as tl
-import torch
 from torch import nn, optim
-from tensorly.decomposition import parafac, tucker, matrix_product_state
-from tensorly.cp_tensor import cp_to_tensor
+from tensorly.decomposition import parafac, tucker, tensor_train
+from tensorly import cp_to_tensor, tucker_to_tensor, tt_to_tensor
 
 
 class PuzzleTensor(nn.Module):
@@ -250,10 +249,7 @@ def train(x, shape, epochs=6001, init='z', num_layer=None, verbose=1):
 
 def main():
     SEED = 42
-    np.set_printoptions(precision=7, linewidth=900, suppress=True)
-    torch.set_printoptions(precision=7, sci_mode=False, linewidth=900)
     torch.manual_seed(SEED)
-    random.seed(SEED)
     np.random.seed(SEED)
 
     # Synthetic Data
@@ -293,70 +289,25 @@ def main():
     # Set Tensorly backend to PyTorch
     tl.set_backend('pytorch')
 
-    # Evaluate CP decomposition on both tensors
-    errors_CP_1, errors_CP_2 = [], []
-    for r in ranks_CP_1:
-        temp_diff, temp_norm = [], []
-        for b in range(x.shape[0]):
-            weights, factors = parafac(x[b], rank=r, normalize_factors=False, tol=1e-2)
-            reconstructed_tensor = cp_to_tensor((weights, factors))
-            temp_diff.append(torch.norm(x[b] - reconstructed_tensor).item())
-            temp_norm.append(torch.norm(x[b]).item())
-        errors_CP_1.append(math.hypot(*temp_diff) / math.hypot(*temp_norm))
-    for r in ranks_CP_2:
-        temp_diff, temp_norm = [], []
-        for b in range(z.shape[0]):
-            weights, factors = parafac(z[b], rank=r, normalize_factors=False, tol=1e-2)
-            reconstructed_tensor = cp_to_tensor((weights, factors))
-            temp_diff.append(torch.norm(z[b] - reconstructed_tensor).item())
-            temp_norm.append(torch.norm(z[b]).item())
-        errors_CP_2.append(math.hypot(*temp_diff) / math.hypot(*temp_norm))
+    # Evaluate
+    def _batch_error(tensors, recon_fn):
+        diff, orig = zip(*((torch.norm(t - recon_fn(t)).item(), torch.norm(t).item()) for t in tensors))
+        return math.hypot(*diff) / math.hypot(*orig)
 
-    # Evaluate Tucker (TK) decomposition on both tensors
-    errors_TK_1, errors_TK_2 = [], []
-    for r in ranks_TK_1:
-        temp_diff, temp_norm = [], []
-        for b in range(x.shape[0]):
-            core, factors = tucker(x[b], rank=[int(r)] * D)
-            reconstructed_tensor = tl.tucker_to_tensor((core, factors))
-            temp_diff.append(torch.norm(x[b] - reconstructed_tensor).item())
-            temp_norm.append(torch.norm(x[b]).item())
-        errors_TK_1.append(math.hypot(*temp_diff) / math.hypot(*temp_norm))
-    for r in ranks_TK_2:
-        temp_diff, temp_norm = [], []
-        for b in range(z.shape[0]):
-            core, factors = tucker(z[b], rank=[int(r)] * D)
-            reconstructed_tensor = tl.tucker_to_tensor((core, factors))
-            temp_diff.append(torch.norm(z[b] - reconstructed_tensor).item())
-            temp_norm.append(torch.norm(z[b]).item())
-        errors_TK_2.append(math.hypot(*temp_diff) / math.hypot(*temp_norm))
+    def _eval(tensors, ranks, builder):
+        return [_batch_error(tensors, lambda t, r=r: builder(r, t)) for r in ranks]
 
-    # Evaluate Tensor-Train (TT) decomposition on both tensors
-    errors_TT_1, errors_TT_2 = [], []
-    for r in ranks_TT_1:
-        temp_diff, temp_norm = [], []
-        for b in range(x.shape[0]):
-            tt_factors = matrix_product_state(x[b], rank=int(r))
-            reconstructed_tensor = tl.tt_to_tensor(tt_factors)
-            temp_diff.append(torch.norm(x[b] - reconstructed_tensor).item())
-            temp_norm.append(torch.norm(x[b]).item())
-        errors_TT_1.append(math.hypot(*temp_diff) / math.hypot(*temp_norm))
-    for r in ranks_TT_2:
-        temp_diff, temp_norm = [], []
-        for b in range(z.shape[0]):
-            tt_factors = matrix_product_state(z[b], rank=int(r))
-            reconstructed_tensor = tl.tt_to_tensor(tt_factors)
-            temp_diff.append(torch.norm(z[b] - reconstructed_tensor).item())
-            temp_norm.append(torch.norm(z[b]).item())
-        errors_TT_2.append(math.hypot(*temp_diff) / math.hypot(*temp_norm))
+    def _cp(rank, tensor): return cp_to_tensor(parafac(tensor, rank, tol=1e-2))
+    def _tk(rank, tensor): return tucker_to_tensor(tucker(tensor, [rank] * D))
+    def _tt(rank, tensor): return tt_to_tensor(tensor_train(tensor, rank))
 
     print("\nReconstruction Errors")
-    print(f"CP                :", "\t".join(map(lambda a: f"{a:8.4f}", errors_CP_1)))
-    print(f"CP + PuzzleTensor :", "\t".join(map(lambda a: f"{a:8.4f}", errors_CP_2)))
-    print(f"TK                :", "\t".join(map(lambda a: f"{a:8.4f}", errors_TK_1)))
-    print(f"TK + PuzzleTensor :", "\t".join(map(lambda a: f"{a:8.4f}", errors_TK_2)))
-    print(f"TT                :", "\t".join(map(lambda a: f"{a:8.4f}", errors_TT_1)))
-    print(f"TT + PuzzleTensor :", "\t".join(map(lambda a: f"{a:8.4f}", errors_TT_2)))
+    print(f"CP                :", "\t".join(map(lambda a: f"{a:8.4f}", _eval(x, ranks_CP_1, _cp))))
+    print(f"CP + PuzzleTensor :", "\t".join(map(lambda a: f"{a:8.4f}", _eval(z, ranks_CP_2, _cp))))
+    print(f"TK                :", "\t".join(map(lambda a: f"{a:8.4f}", _eval(x, ranks_TK_1, _tk))))
+    print(f"TK + PuzzleTensor :", "\t".join(map(lambda a: f"{a:8.4f}", _eval(z, ranks_TK_2, _tk))))
+    print(f"TT                :", "\t".join(map(lambda a: f"{a:8.4f}", _eval(x, ranks_TT_1, _tt))))
+    print(f"TT + PuzzleTensor :", "\t".join(map(lambda a: f"{a:8.4f}", _eval(z, ranks_TT_2, _tt))))
 
 
 if __name__ == '__main__':
