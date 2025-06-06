@@ -42,6 +42,6 @@ If you use this code, please cite the following paper.
 @inproceedings{ParkKK25,
   title     = {PuzzleTensor: A Method-Agnostic Data Transformation for Compact Tensor Factorization},
   author    = {Park, Yong-chan and Kim, Kisoo and Kang, U},
-  booktitle = {Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2 (KDD ’25)},
+  booktitle = {Proceedings of the 31st ACM SIGKDD Conference on Knowledge Discovery and Data Mining V.2 (KDD '25)},
   year      = {2025}
 }
