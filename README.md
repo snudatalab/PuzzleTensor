@@ -38,13 +38,10 @@ We provide the synthetic and real-world datasets used in our experiments below.
 ## Reference
 
 If you use this code, please cite the following paper.
-~~~
+```bibtex
 @inproceedings{ParkKK25,
-  author    = {Yong-chan Park and
-               Kisoo Kim and
-               U Kang},
   title     = {PuzzleTensor: A Method-Agnostic Data Transformation for Compact Tensor Factorization},
-  booktitle = {ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD)},
+  author    = {Park, Yong-chan and Kim, Kisoo and Kang, U},
+  booktitle = {Proceedings of the ACM SIGKDD International Conference on Knowledge Discovery and Data Mining (KDD)},
   year      = {2025}
 }
-~~~
